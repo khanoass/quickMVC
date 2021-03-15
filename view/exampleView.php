@@ -1,44 +1,44 @@
 <?php
-session_start();
 require_once('../constants.php');
 
 // Include repository
 require_once(ROOT_DIR.'/model/exampleRepository.php');
 $repo = new ExampleRepository();
+
+require_once('../components/tools.php');
+
+// Build page head
+buildHtmlHead('My Site');
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Example</title>
-</head>
-<body>
-    <p>Example View</p>
-    <?= 'Root directory: '.ROOT_DIR ?>
-    
-    <?php
-        // Using the model ($repo)
+<p>Example View</p>
+<?= 'Root directory: '.ROOT_DIR ?>
 
-        // Example error handling
-        if($repo->hasData('error'))
-        {
-            echo('<p>Error: '.$repo->getData('error').'</p>');
-        }
+<?php
 
-        // Get random data
-        if($repo->hasData('stuff'))
-        {
-            $data = $repo->getData('stuff');
-            foreach($data as $d)
-            {
-                echo('<p>'.$d.'</p>');
-            }
-        }
-        else
-        {
-            echo('<p>No data to be displayed.</p>');
-        }
-    ?>
-</body>
-</html>
+// Example error handling
+if($repo->hasSpecialData(BaseRepository::SpecialData::Error))
+{
+    echo('<p>Error: '.$repo->getSpecialData(BaseRepository::SpecialData::Error).'</p>');
+}
+
+// Error handling with bootstrap
+//showBootstrapMessage($repo, BaseRepository::SpecialData::Error);
+
+// Get random data
+if($repo->hasData('stuff'))
+{
+    $data = $repo->getData('stuff');
+    foreach($data as $d)
+    {
+        echo('<p>'.$d.'</p>');
+    }
+}
+else
+{
+    echo('<p>No data to be displayed.</p>');
+}
+
+// Build page end
+buildHtmlFooter();
+?>

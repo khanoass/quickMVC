@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once('../constants.php');
 require_once('baseController.php');
 require_once(ROOT_DIR.'/model/exampleRepository.php');
@@ -29,9 +28,6 @@ class ExampleController extends BaseController
     */
     protected static function performThingA()
     {
-        // Clear the repository's repo so our next view does not display wrong data
-        $this->repo->clearData();
-
         // Get the GET parameter "param1" and "param2"
         $p1 = (new self)->getParam('param1');
         $p2 = (new self)->getParam('param2');
